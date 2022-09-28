@@ -6,8 +6,8 @@
 
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
-| Задание 1 | # | 60 |
-| Задание 2 | # | 20 |
+| Задание 1 | * | 60 |
+| Задание 2 | * | 20 |
 | Задание 3 | # | 20 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
@@ -40,98 +40,103 @@
 ## Задание 1
 ### Написать программы Hello World на Python и Unity
 Ход работы:
-- Для Python в отчете привести скриншоты с демонстрацией сохранения
-документа google.colab на свой диск с запуском программы, выводящей
-сообщение Hello World.
-- Для Unity в отчете привести скришноты вывода сообщения Hello
-World в консоль.
-
+-Написал и запустил файл .py в PyCharm:
 ![image](https://user-images.githubusercontent.com/101344196/192602782-092a45da-0ffb-450a-90ae-5eb3875c7796.png)
 
+-После объединения Unity и VS Code написал код и запустил в 3D-проекте Unity. Результат работы в консоли:
 ![image](https://user-images.githubusercontent.com/101344196/192607206-350a16e2-18e4-4c35-83c7-3f92ba8c54ac.png)
 
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
+## Задание 2
 Ход работы:
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
+- Произвёл подготовку данных для работы с алгоритмом линейной регрессии используя Anaconda и Yupiter.
 
 ```py
 
 In [ ]:
-#Import the required modules, numpy for calculation, and Matplotlib for drawing
 import numpy as np
 import matplotlib.pyplot as plt
-#This code is for jupyter Notebook only
 %matplotlib inline
 
-# define data, and change list to array
-x = [3,21,22,34,54,34,55,67,89,99]
+x = [3, 21, 22, 34, 54, 34, 55, 67, 89, 99]
 x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
+y = [2, 22, 24, 65, 79, 82, 55, 130, 150, 199]
 y = np.array(y)
 
-#Show the effect of a scatter plot
 plt.scatter(x,y)
 
 ```
+- Вывод после подготовки данных:
+![image](https://user-images.githubusercontent.com/101344196/192848677-4fc7e091-c144-49dd-82ed-4cf397afbce1.png)
 
-- Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
-
-
-## Задание 2
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
-
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
-
+- Далее определил связанные функции, а именно: Функцию модели, Функцию потерь, Функцию оптимизации.
 ```py
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+import numpy as np
+import matplotlib.pyplot as plt
+ 
+x = [3, 21, 22, 34, 54, 34, 55, 67, 89, 99]
+x = np.array(x)
+y = [2, 22, 24, 65, 79, 82, 55, 130, 150, 199]
+y = np.array(y)
+ 
+plt.scatter(x, y)
+ 
+def model(a, b, x):
+    return a * x + b
+  
+def loss_function(a, b, x, y):
+    num = len(x)
+    prediction = model(a, b, x)
+    return (0.5 / num) * (np.square(prediction - y)).sum()
+  
+def optimize(a, b, x, y):
+    num = len(x)
+    prediction = model(a, b, x)
+    da = (1.0 / num) * ((prediction - y) * x).sum()
+    db = (1.0 / num) * ((prediction - y).sum())
+    a = a - Lr * da
+    b = b - Lr * db
+    return a, b
+ 
+def iterate(a, b, x, y, times):
+    for i in range(times):
+        a, b = optimize(a, b, x, y)
+    return a, b
+ 
+a = np.random.rand(1)
+b = np.random.rand(1)
+Lr = 0.000001
+ 
+a, b = iterate(a, b, x, y, 1000)
+prediction = model(a, b, x)
+loss = loss_function(a, b, x, y)
+print(a, b, loss)
+plt.scatter(x, y)
+plt.plot(x, prediction)
 
 ```
+- результат работы финальной версии теста:
+![image](https://user-images.githubusercontent.com/101344196/192851443-969f36f8-f147-4775-be26-6b8d62cf5ddb.png)
 
-## Задание 3
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
+- После начал производить итерации
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+- Результат первой итерации
+![image](https://user-images.githubusercontent.com/101344196/192858593-5d7b4855-162a-4665-8095-92ca2bd3a482.png)
 
-```py
+- Результат второй итерации
+- ![image](https://user-images.githubusercontent.com/101344196/192859109-30f7a15b-19ae-4efa-a8a3-3ba3140eeeb8.png)
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+- Результат третей итерации
+- ![image](https://user-images.githubusercontent.com/101344196/192859665-6a0ed342-2892-41c6-b2dd-856464d3d9a7.png)
 
-```
+- Результат четвёртой итерации
+- ![image](https://user-images.githubusercontent.com/101344196/192859874-9a6fec80-0aa3-4471-9c94-5ef28b843aaf.png)
+
+- Результат пятой итерации
+- ![image](https://user-images.githubusercontent.com/101344196/192860016-ade4d20c-0f19-469c-99f9-470011259e0a.png)
+
+- Результат 10000 операции
+- ![image](https://user-images.githubusercontent.com/101344196/192860179-15934d86-6d82-4662-98cc-3a8799cf7ae8.png)
 
 ## Выводы
 
