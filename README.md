@@ -40,10 +40,10 @@
 ## Задание 1
 ### Написать программы Hello World на Python и Unity
 Ход работы:
--Написал и запустил файл .py в PyCharm:
+- Написал и запустил файл .py в PyCharm:
 ![image](https://user-images.githubusercontent.com/101344196/192602782-092a45da-0ffb-450a-90ae-5eb3875c7796.png)
 
--После объединения Unity и VS Code написал код и запустил в 3D-проекте Unity. Результат работы в консоли:
+- После объединения Unity и VS Code написал код и запустил в 3D-проекте Unity. Результат работы в консоли:
 ![image](https://user-images.githubusercontent.com/101344196/192607206-350a16e2-18e4-4c35-83c7-3f92ba8c54ac.png)
 
 ## Задание 2
